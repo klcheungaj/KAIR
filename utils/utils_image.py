@@ -252,12 +252,13 @@ def read_img(path):
 
 def uint2single(img):
 
-    return np.float32(img/255.)
+    # return np.float32(img/255.)
+    return np.float32(img)
 
 
 def single2uint(img):
 
-    return np.uint8((img.clip(0, 1)*255.).round())
+    return np.uint8((img.clip(0, 255.)).round())
 
 
 def uint162single(img):
@@ -279,22 +280,24 @@ def single2uint16(img):
 def uint2tensor4(img):
     if img.ndim == 2:
         img = np.expand_dims(img, axis=2)
-    return torch.from_numpy(np.ascontiguousarray(img)).permute(2, 0, 1).float().div(255.).unsqueeze(0)
+    return torch.from_numpy(np.ascontiguousarray(img)).permute(2, 0, 1).float().unsqueeze(0)
 
 
 # convert uint to 3-dimensional torch tensor
 def uint2tensor3(img):
     if img.ndim == 2:
         img = np.expand_dims(img, axis=2)
-    return torch.from_numpy(np.ascontiguousarray(img)).permute(2, 0, 1).float().div(255.)
+    return torch.from_numpy(np.ascontiguousarray(img)).permute(2, 0, 1).float()
 
 
 # convert 2/3/4-dimensional torch tensor to uint
 def tensor2uint(img):
-    img = img.data.squeeze().float().clamp_(0, 1).cpu().numpy()
+    # img = img.data.squeeze().float().clamp_(0, 1).cpu().numpy()
+    img = img.data.squeeze().float().clamp_(0, 255).cpu().numpy()
     if img.ndim == 3:
         img = np.transpose(img, (1, 2, 0))
-    return np.uint8((img*255.0).round())
+    # return np.uint8((img*255.0).round())
+    return np.uint8((img).round())
 
 
 # --------------------------------------------

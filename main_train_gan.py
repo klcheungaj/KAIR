@@ -227,8 +227,10 @@ def main(json_path='options/train_msrresnet_gan.json'):
                     img_dir = os.path.join(opt['path']['images'], img_name)
                     util.mkdir(img_dir)
 
-                    model.feed_data(test_data)
-                    model.test()
+                    # model.feed_data(test_data)
+                    # model.test()
+                    model.feed_data(test_data, device='cpu')
+                    model.testq()
 
                     visuals = model.current_visuals()
                     E_img = util.tensor2uint(visuals['E'])

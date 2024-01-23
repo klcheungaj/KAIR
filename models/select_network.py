@@ -246,6 +246,15 @@ def define_G(opt):
                    no_checkpoint_attn_blocks=opt_net['no_checkpoint_attn_blocks'],
                    no_checkpoint_ffn_blocks=opt_net['no_checkpoint_ffn_blocks'],
                    cpu_cache_length=opt_net['cpu_cache_length'])
+    elif net_type == 'separablerrdbnet':
+        from models.network_rrdb_arch import SeparableRRDBNet as net
+        netG = net(num_in_ch=opt_net['num_in_ch'],
+                   num_out_ch=opt_net['num_out_ch'],
+                   scale=opt_net['scale'],
+                   num_feat=opt_net['num_feat'],
+                   num_block=opt_net['num_block'],
+                   num_grow_ch=opt_net['num_grow_ch'],
+                   quan=opt_net['quan'])
 
     # ----------------------------------------
     # others
@@ -319,7 +328,6 @@ def define_D(opt):
         from models.network_discriminator import Discriminator_UNet as discriminator
         netD = discriminator(input_nc=opt_net['in_nc'],
                              ndf=opt_net['base_nc'])
-
     else:
         raise NotImplementedError('netD [{:s}] is not found.'.format(net_type))
 

@@ -109,7 +109,7 @@ class ModelBase():
                 print('Using static graph. Make sure that "unused parameters" will not change during training loop.')
                 network._set_static_graph()
         else:
-            network = DataParallel(network)
+            network = DataParallel(network, output_device=self.device)
         return network
 
     # ----------------------------------------
@@ -133,7 +133,7 @@ class ModelBase():
         for name, param in network.state_dict().items():
             if not 'num_batches_tracked' in name:
                 v = param.data.clone().float()
-                msg += ' | {:>6.3f} | {:>6.3f} | {:>6.3f} | {:>6.3f} | {} || {:s}'.format(v.mean(), v.min(), v.max(), v.std(), v.shape, name) + '\n'
+                # msg += ' | {:>6.3f} | {:>6.3f} | {:>6.3f} | {:>6.3f} | {} || {:s}'.format(v.mean(), v.min(), v.max(), v.std(), v.shape, name) + '\n'
         return msg
 
     """

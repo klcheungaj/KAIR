@@ -373,7 +373,8 @@ def add_Gaussian_noise(img, noise_level1=2, noise_level2=25):
         U = orth(np.random.rand(3,3))
         conv = np.dot(np.dot(np.transpose(U), D), U)
         img += np.random.multivariate_normal([0,0,0], np.abs(L**2*conv), img.shape[:2]).astype(np.float32)
-    img = np.clip(img, 0.0, 1.0)
+    # img = np.clip(img, 0.0, 1.0)
+    img = np.clip(img, 0.0, 255.0)
     return img
 
 

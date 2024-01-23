@@ -1,0 +1,127 @@
+23-04-23 15:39:14.793 : Model path: model_zoo/46020_Gq.pth
+23-04-23 15:39:14.793 : Params number: 0
+23-04-23 15:39:14.793 : model_name:46020_Gq, image sigma:0
+23-04-23 15:39:14.793 : /home/kenny/dataset/Set14/LR
+23-04-23 15:40:12.249 : Model path: model_zoo/46020_Gq.pth
+23-04-23 15:40:12.250 : Params number: 0
+23-04-23 15:40:12.250 : model_name:46020_Gq, image sigma:0
+23-04-23 15:40:12.250 : /home/kenny/dataset/Set14/LR
+23-04-23 15:40:24.343 : Model path: model_zoo/46020_Gq.pth
+23-04-23 15:40:24.343 : Params number: 0
+23-04-23 15:40:24.343 : model_name:46020_Gq, image sigma:0
+23-04-23 15:40:24.343 : /home/kenny/dataset/Set14/LR
+23-04-23 15:41:43.363 : Model path: model_zoo/46020_Gq.pth
+23-04-23 15:41:43.363 : Params number: 0
+23-04-23 15:41:43.363 : model_name:46020_Gq, image sigma:0
+23-04-23 15:41:43.364 : /home/kenny/dataset/Set14/LR
+23-04-23 15:42:57.186 : Model path: model_zoo/46020_Gq.pth
+23-04-23 15:42:57.187 : Params number: 0
+23-04-23 15:42:57.187 : model_name:46020_Gq, image sigma:0
+23-04-23 15:42:57.187 : /home/kenny/dataset/Set14/LR
+23-04-23 15:42:57.436 : img_001_SRF_4.png - PSNR: 19.18 dB; SSIM: 0.3786.
+23-04-23 15:42:57.823 : img_002_SRF_4.png - PSNR: 22.18 dB; SSIM: 0.6218.
+23-04-23 15:42:58.139 : img_003_SRF_4.png - PSNR: 20.55 dB; SSIM: 0.5059.
+23-04-23 15:42:58.299 : img_004_SRF_4.png - PSNR: 22.83 dB; SSIM: 0.4692.
+23-04-23 15:42:58.408 : img_005_SRF_4.png - PSNR: 17.99 dB; SSIM: 0.5404.
+23-04-23 15:42:58.515 : img_006_SRF_4.png - PSNR: 24.28 dB; SSIM: 0.6151.
+23-04-23 15:42:58.711 : img_007_SRF_4.png - PSNR: 21.89 dB; SSIM: 0.6646.
+23-04-23 15:42:58.855 : img_008_SRF_4.png - PSNR: 16.84 dB; SSIM: 0.7860.
+23-04-23 15:42:59.105 : img_009_SRF_4.png - PSNR: 24.33 dB; SSIM: 0.7156.
+23-04-23 15:42:59.394 : img_010_SRF_4.png - PSNR: 23.79 dB; SSIM: 0.6231.
+23-04-23 15:42:59.785 : img_011_SRF_4.png - PSNR: 24.52 dB; SSIM: 0.8419.
+23-04-23 15:43:00.080 : img_012_SRF_4.png - PSNR: 23.57 dB; SSIM: 0.6876.
+23-04-23 15:43:00.417 : img_013_SRF_4.png - PSNR: 12.86 dB; SSIM: 0.7288.
+23-04-23 15:43:00.684 : img_014_SRF_4.png - PSNR: 21.62 dB; SSIM: 0.6365.
+23-04-23 15:43:00.722 : Average PSNR/SSIM(RGB) - Set14_46020_Gq - x1 --PSNR: 21.17 dB; SSIM: 0.6296
+23-04-23 15:43:00.723 : Average PSNR/SSIM( Y ) - Set14_46020_Gq - x1 - PSNR: 22.74 dB; SSIM: 0.6895
+23-04-23 15:43:48.875 : Model path: model_zoo/46020_Gq.pth
+23-04-23 15:43:48.875 : Params number: 0
+23-04-23 15:43:48.876 : model_name:46020_Gq, image sigma:0
+23-04-23 15:43:48.876 : /home/kenny/dataset/Set14/LR
+23-04-23 15:43:49.097 : img_001_SRF_4.png - PSNR: 19.18 dB; SSIM: 0.3786.
+23-04-23 15:43:49.475 : img_002_SRF_4.png - PSNR: 22.18 dB; SSIM: 0.6218.
+23-04-23 15:43:49.773 : img_003_SRF_4.png - PSNR: 20.55 dB; SSIM: 0.5059.
+23-04-23 15:43:49.927 : img_004_SRF_4.png - PSNR: 22.83 dB; SSIM: 0.4692.
+23-04-23 15:43:50.027 : img_005_SRF_4.png - PSNR: 17.99 dB; SSIM: 0.5404.
+23-04-23 15:43:50.128 : img_006_SRF_4.png - PSNR: 24.28 dB; SSIM: 0.6151.
+23-04-23 15:43:50.325 : img_007_SRF_4.png - PSNR: 21.89 dB; SSIM: 0.6646.
+23-04-23 15:43:50.460 : img_008_SRF_4.png - PSNR: 16.84 dB; SSIM: 0.7860.
+23-04-23 15:43:50.717 : img_009_SRF_4.png - PSNR: 24.33 dB; SSIM: 0.7156.
+23-04-23 15:43:50.992 : img_010_SRF_4.png - PSNR: 23.79 dB; SSIM: 0.6231.
+23-04-23 15:43:51.369 : img_011_SRF_4.png - PSNR: 24.52 dB; SSIM: 0.8419.
+23-04-23 15:43:51.679 : img_012_SRF_4.png - PSNR: 23.57 dB; SSIM: 0.6876.
+23-04-23 15:43:52.015 : img_013_SRF_4.png - PSNR: 12.86 dB; SSIM: 0.7288.
+23-04-23 15:43:52.268 : img_014_SRF_4.png - PSNR: 21.62 dB; SSIM: 0.6365.
+23-04-23 15:43:52.307 : Average PSNR/SSIM(RGB) - Set14_46020_Gq - x1 --PSNR: 21.17 dB; SSIM: 0.6296
+23-04-23 15:43:52.308 : Average PSNR/SSIM( Y ) - Set14_46020_Gq - x1 - PSNR: 22.74 dB; SSIM: 0.6895
+23-04-23 15:44:55.372 : Model path: model_zoo/46020_Gq.pth
+23-04-23 15:44:55.372 : Params number: 0
+23-04-23 15:44:55.372 : model_name:46020_Gq, image sigma:0
+23-04-23 15:44:55.372 : /home/kenny/dataset/Set14/LR
+23-04-23 15:44:55.589 : img_001_SRF_4.png - PSNR: 19.18 dB; SSIM: 0.3786.
+23-04-23 15:44:55.978 : img_002_SRF_4.png - PSNR: 22.18 dB; SSIM: 0.6218.
+23-04-23 15:44:56.284 : img_003_SRF_4.png - PSNR: 20.55 dB; SSIM: 0.5059.
+23-04-23 15:44:56.446 : img_004_SRF_4.png - PSNR: 22.83 dB; SSIM: 0.4692.
+23-04-23 15:44:56.556 : img_005_SRF_4.png - PSNR: 17.99 dB; SSIM: 0.5404.
+23-04-23 15:44:56.662 : img_006_SRF_4.png - PSNR: 24.28 dB; SSIM: 0.6151.
+23-04-23 15:44:56.854 : img_007_SRF_4.png - PSNR: 21.89 dB; SSIM: 0.6646.
+23-04-23 15:44:56.996 : img_008_SRF_4.png - PSNR: 16.84 dB; SSIM: 0.7860.
+23-04-23 15:44:57.245 : img_009_SRF_4.png - PSNR: 24.33 dB; SSIM: 0.7156.
+23-04-23 15:44:57.529 : img_010_SRF_4.png - PSNR: 23.79 dB; SSIM: 0.6231.
+23-04-23 15:44:57.907 : img_011_SRF_4.png - PSNR: 24.52 dB; SSIM: 0.8419.
+23-04-23 15:46:03.906 : Model path: model_zoo/46020_Gq.pth
+23-04-23 15:46:03.906 : Params number: 0
+23-04-23 15:46:03.906 : model_name:46020_Gq, image sigma:0
+23-04-23 15:46:03.906 : /home/kenny/dataset/Set14/LR
+23-04-23 15:46:04.134 : img_001_SRF_4.png - PSNR: 19.18 dB; SSIM: 0.3786.
+23-04-23 15:46:04.527 : img_002_SRF_4.png - PSNR: 22.18 dB; SSIM: 0.6218.
+23-04-23 15:46:04.832 : img_003_SRF_4.png - PSNR: 20.55 dB; SSIM: 0.5059.
+23-04-23 15:46:04.995 : img_004_SRF_4.png - PSNR: 22.83 dB; SSIM: 0.4692.
+23-04-23 15:46:15.612 : Model path: model_zoo/46020_Gq.pth
+23-04-23 15:46:15.612 : Params number: 0
+23-04-23 15:46:15.612 : model_name:46020_Gq, image sigma:0
+23-04-23 15:46:15.612 : /home/kenny/dataset/Set14/LR
+23-04-23 15:46:33.408 : Model path: model_zoo/46020_Gq.pth
+23-04-23 15:46:33.409 : Params number: 0
+23-04-23 15:46:33.409 : model_name:46020_Gq, image sigma:0
+23-04-23 15:46:33.409 : /home/kenny/dataset/Set14/LR
+23-04-23 15:46:47.975 : Model path: model_zoo/46020_Gq.pth
+23-04-23 15:46:47.975 : Params number: 0
+23-04-23 15:46:47.975 : model_name:46020_Gq, image sigma:0
+23-04-23 15:46:47.975 : /home/kenny/dataset/Set14/LR
+23-04-23 15:46:48.170 : img_001_SRF_4.png - PSNR: 19.19 dB; SSIM: 0.3798.
+23-04-23 15:46:48.526 : img_002_SRF_4.png - PSNR: 22.14 dB; SSIM: 0.6189.
+23-04-23 15:46:48.800 : img_003_SRF_4.png - PSNR: 20.54 dB; SSIM: 0.5072.
+23-04-23 15:46:48.943 : img_004_SRF_4.png - PSNR: 22.89 dB; SSIM: 0.4651.
+23-04-23 15:46:49.042 : img_005_SRF_4.png - PSNR: 17.93 dB; SSIM: 0.5371.
+23-04-23 15:46:49.141 : img_006_SRF_4.png - PSNR: 24.44 dB; SSIM: 0.6156.
+23-04-23 15:46:49.300 : img_007_SRF_4.png - PSNR: 21.80 dB; SSIM: 0.6625.
+23-04-23 15:46:49.427 : img_008_SRF_4.png - PSNR: 16.86 dB; SSIM: 0.7912.
+23-04-23 15:46:49.666 : img_009_SRF_4.png - PSNR: 24.32 dB; SSIM: 0.7150.
+23-04-23 15:46:49.931 : img_010_SRF_4.png - PSNR: 23.75 dB; SSIM: 0.6229.
+23-04-23 15:46:50.291 : img_011_SRF_4.png - PSNR: 24.46 dB; SSIM: 0.8410.
+23-04-23 15:46:50.578 : img_012_SRF_4.png - PSNR: 23.72 dB; SSIM: 0.6878.
+23-04-23 15:46:50.896 : img_013_SRF_4.png - PSNR: 12.87 dB; SSIM: 0.7276.
+23-04-23 15:46:51.131 : img_014_SRF_4.png - PSNR: 21.58 dB; SSIM: 0.6375.
+23-04-23 15:46:51.170 : Average PSNR/SSIM(RGB) - Set14_46020_Gq - x4 --PSNR: 21.18 dB; SSIM: 0.6292
+23-04-23 15:46:51.170 : Average PSNR/SSIM( Y ) - Set14_46020_Gq - x4 - PSNR: 22.75 dB; SSIM: 0.6889
+23-04-23 15:47:35.709 : Model path: model_zoo/46020_Gq.pth
+23-04-23 15:47:35.709 : Params number: 0
+23-04-23 15:47:35.709 : model_name:46020_Gq, image sigma:0
+23-04-23 15:47:35.710 : /home/kenny/dataset/Set14/LR
+23-04-23 15:47:35.897 : img_001_SRF_4.png - PSNR: 19.19 dB; SSIM: 0.3798.
+23-04-23 15:47:36.246 : img_002_SRF_4.png - PSNR: 22.14 dB; SSIM: 0.6189.
+23-04-23 15:47:36.530 : img_003_SRF_4.png - PSNR: 20.54 dB; SSIM: 0.5072.
+23-04-23 15:47:36.667 : img_004_SRF_4.png - PSNR: 22.89 dB; SSIM: 0.4651.
+23-04-23 15:47:36.763 : img_005_SRF_4.png - PSNR: 17.93 dB; SSIM: 0.5371.
+23-04-23 15:47:36.856 : img_006_SRF_4.png - PSNR: 24.44 dB; SSIM: 0.6156.
+23-04-23 15:47:37.015 : img_007_SRF_4.png - PSNR: 21.80 dB; SSIM: 0.6625.
+23-04-23 15:47:37.134 : img_008_SRF_4.png - PSNR: 16.86 dB; SSIM: 0.7912.
+23-04-23 15:47:37.389 : img_009_SRF_4.png - PSNR: 24.32 dB; SSIM: 0.7150.
+23-04-23 15:47:37.660 : img_010_SRF_4.png - PSNR: 23.75 dB; SSIM: 0.6229.
+23-04-23 15:47:38.026 : img_011_SRF_4.png - PSNR: 24.46 dB; SSIM: 0.8410.
+23-04-23 15:47:38.302 : img_012_SRF_4.png - PSNR: 23.72 dB; SSIM: 0.6878.
+23-04-23 15:47:38.612 : img_013_SRF_4.png - PSNR: 12.87 dB; SSIM: 0.7276.
+23-04-23 15:47:38.854 : img_014_SRF_4.png - PSNR: 21.58 dB; SSIM: 0.6375.
+23-04-23 15:47:38.893 : Average PSNR/SSIM(RGB) - Set14_46020_Gq - x4 --PSNR: 21.18 dB; SSIM: 0.6292
+23-04-23 15:47:38.893 : Average PSNR/SSIM( Y ) - Set14_46020_Gq - x4 - PSNR: 22.75 dB; SSIM: 0.6889

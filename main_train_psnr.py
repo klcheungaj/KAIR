@@ -18,6 +18,7 @@ from utils.utils_dist import get_dist_info, init_dist
 from data.select_dataset import define_Dataset
 from models.select_model import define_Model
 
+from prefetcher import CUDAPrefetcher
 
 '''
 # --------------------------------------------
@@ -157,6 +158,8 @@ def main(json_path='options/train_msrresnet_psnr.json'):
     if opt['rank'] == 0:
         logger.info(model.info_network())
         logger.info(model.info_params())
+    # prefetcher = CUDAPrefetcher(train_loader, opt)
+    # logger.info(f'Use prefetch dataloader')
 
     '''
     # ----------------------------------------
@@ -167,7 +170,10 @@ def main(json_path='options/train_msrresnet_psnr.json'):
     for epoch in range(1000000):  # keep running
         if opt['dist']:
             train_sampler.set_epoch(epoch)
-
+        # prefetcher.reset()
+        # train_data = prefetcher.next()
+        # # for i, train_data in enumerate(train_loader):
+        # while train_data is not None:
         for i, train_data in enumerate(train_loader):
 
             current_step += 1
@@ -246,6 +252,7 @@ def main(json_path='options/train_msrresnet_psnr.json'):
 
                 # testing log
                 logger.info('<epoch:{:3d}, iter:{:8,d}, Average PSNR : {:<.2f}dB\n'.format(epoch, current_step, avg_psnr))
+            # train_data = prefetcher.next()
 
 if __name__ == '__main__':
     main()

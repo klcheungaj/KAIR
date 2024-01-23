@@ -2,7 +2,34 @@ import random
 import numpy as np
 import torch.utils.data as data
 import utils.utils_image as util
+from utils import utils_blindsr as blindsr
+import cv2
+import torch.nn.functional as F
 
+def add_JPEG_noise(img):
+    quality_factor = random.randint(50, 95)
+    img = cv2.cvtColor(util.single2uint(img), cv2.COLOR_RGB2BGR)
+    result, encimg = cv2.imencode('.jpg', img, [int(cv2.IMWRITE_JPEG_QUALITY), quality_factor])
+    img = cv2.imdecode(encimg, 1)
+    img = cv2.cvtColor(util.uint2single(img), cv2.COLOR_BGR2RGB)
+    return img
+
+def preprocess(img_H, img_L, scale):
+    img = cv2.resize(img, (int(1/sf*a), int(1/sf*b)), interpolation=random.choice([1,2,3]))
+    img = np.clip(img, 0.0, 1.0)
+
+def postprocess(img_H, img_L):
+    img_L = blindsr.add_Gaussian_noise(img_L, noise_level1=2, noise_level2=25)
+    # img_L = add_JPEG_noise(img_L)
+    return img_H, img_L
+
+def padding(img,  size):
+    H, W, C = img.shape
+    pad_H = size - H if H < size else 0
+    pad_W = size - W if W < size else 0
+    if pad_W != 0 or pad_H != 0:
+        img = np.pad(img, pad_width=((0, pad_H), (0, pad_W), (0, 0)))
+    return img
 
 class DatasetSR(data.Dataset):
     '''
@@ -25,8 +52,11 @@ class DatasetSR(data.Dataset):
         # ------------------------------------
         # get paths of L/H
         # ------------------------------------
-        self.paths_H = util.get_image_paths(opt['dataroot_H'])
-        self.paths_L = util.get_image_paths(opt['dataroot_L'])
+        self.paths_H = []
+        self.paths_L = []
+        for hr, lr in zip(opt['dataroot_H'], opt['dataroot_L']):
+            self.paths_H = self.paths_H + util.get_image_paths(hr)
+            self.paths_L = self.paths_L + util.get_image_paths(lr)
 
         assert self.paths_H, 'Error: H path is empty.'
         if self.paths_L and self.paths_H:
@@ -72,6 +102,10 @@ class DatasetSR(data.Dataset):
 
             H, W, C = img_L.shape
 
+            # preprocess(img_H, img_L)
+            img_H = padding(img_H, self.patch_size)
+            img_L = padding(img_L, self.L_size)
+
             # --------------------------------
             # randomly crop the L patch
             # --------------------------------
@@ -90,6 +124,7 @@ class DatasetSR(data.Dataset):
             # --------------------------------
             mode = random.randint(0, 7)
             img_L, img_H = util.augment_img(img_L, mode=mode), util.augment_img(img_H, mode=mode)
+            img_H, img_L = postprocess(img_H, img_L)
 
         # ------------------------------------
         # L/H pairs, HWC to CHW, numpy to tensor

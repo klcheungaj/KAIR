@@ -1,0 +1,143 @@
+{
+  "task": "swinir_sr_rrdb_x4_gan_blindsr"     //  classical image sr for x2/x3/x4. root/task/images-models-options
+  , "model": "gan" // "plain" | "plain2" if two inputs
+  , "gpu_ids": [0]
+  , "dist": false
+
+  , "scale": 4       // 2 | 3 | 4
+  , "n_channels": 3  // broadcast to "datasets", 1 for grayscale, 3 for color
+
+  , "path": {
+    "root": "superresolution"            // "denoising" | "superresolution" | "dejpeg"
+    , "pretrained_netG": null      // path of pretrained model. We fine-tune X3/X4 models from X2 model, so that `G_optimizer_lr` and `G_scheduler_milestones` can be halved to save time.
+    , "pretrained_netE": null      // path of pretrained model
+    , "pretrained_netD": null  // path of pretrained model
+  }
+
+  , "datasets": {
+    "train": {
+      "name": "train_dataset"           // just name
+      , "dataset_type": "blindsr"         // "dncnn" | "dnpatch" | "fdncnn" | "ffdnet" | "sr" | "srmd" | "dpsr" | "plain" | "plainpatch" | "jpeg"
+      , "dataroot_H": [
+        "/home/kenny/dataset/DIV2K/DIV2K_train_HR",
+        "/home/kenny/dataset/Flickr2K/Flickr2K_HR"
+        // "/root/autodl-tmp/dataset/animal",
+        // "/root/autodl-tmp/dataset/building",
+        // "/root/autodl-tmp/dataset/FFHQ",
+        // "/root/autodl-tmp/dataset/grass",
+        // "/root/autodl-tmp/dataset/mountain",
+        // "/root/autodl-tmp/dataset/plant"
+        // "/root/autodl-tmp/dataset/SCUT-CTW1500"
+      ] // path of H training dataset. DIV2K (800 training images)
+      ,
+      "dataroot_L": [
+        "/home/kenny/dataset/DIV2K/DIV2K_train_LR_bicubic",
+        "/home/kenny/dataset/Flickr2K/Flickr2K_LR"
+        // "/root/autodl-tmp/dataset/animal_LR/LR/x4",
+        // "/root/autodl-tmp/dataset/building_LR/LR/x4",
+        // "/root/autodl-tmp/dataset/FFHQ_LR/LR/x4",
+        // "/root/autodl-tmp/dataset/grass_LR/LR/x4",
+        // "/root/autodl-tmp/dataset/mountain_LR/LR/x4",
+        // "/root/autodl-tmp/dataset/plant_LR/LR/x4"
+        // "/root/autodl-tmp/dataset/SCUT-CTW1500_LR/LR/x4"
+      ] // path of L training dataset
+
+      , "H_size": 256                   // 128/192/256/512.
+
+      , "dataloader_shuffle": true
+      , "dataloader_num_workers": 8
+      , "dataloader_batch_size": 14      // Total batch size =8x8=64 in SwinIR
+    }
+    , "test": {
+      "name": "test_dataset"            // just name
+      , "dataset_type": "blindsr"         // "dncnn" | "dnpatch" | "fdncnn" | "ffdnet" | "sr" | "srmd" | "dpsr" | "plain" | "plainpatch" | "jpeg"
+      , "dataroot_H": ["/home/kenny/dataset/Set14/HR"]  // path of H testing dataset
+      , "dataroot_L": ["/home/kenny/dataset/Set14/LR"]              // path of L testing dataset
+
+    }
+  }
+
+  , "netG": {
+    // "net_type": "swinir"
+    // , "upscale": 4                      // 2 | 3  | 4
+    // , "in_chans": 3
+    // , "img_size": 64
+    // , "window_size": 8
+    // , "img_range": 1.0
+    // , "depths": [6, 6, 6, 6]
+    // , "embed_dim": 60
+    // , "num_heads": [6, 6, 6, 6]
+    // , "mlp_ratio": 2
+    // , "upsampler": "pixelshuffledirect"        // "pixelshuffle" | "pixelshuffledirect" | "nearest+conv" | null
+    // , "resi_connection": "1conv"        // "1conv" | "3conv"
+    // , "init_type": "default"
+    "net_type": "separablerrdbnet"
+    , "num_in_ch": 3
+    , "num_out_ch": 3
+    , "num_feat": 32
+    , "num_block": 5
+    , "num_grow_ch": 16
+    , "scale": 4
+    , "init_type": "default"
+    , "quan": false
+  }
+
+  , "netD": {
+    "net_type": "discriminator_unet" // "discriminator_patchgan" | "discriminator_unet"
+    , "in_nc": 3
+    , "base_nc": 64
+    , "n_layers": 3                  // only for "net_type":"discriminator_patchgan"
+    , "norm_type": "spectral"        // only for "net_type":"discriminator_patchgan"  | 'batch', 'instance', 'spectral', 'batchspectral', 'instancespectral'
+
+    , "init_type": "orthogonal"      // "orthogonal" | "normal" | "uniform" | "xavier_normal" | "xavier_uniform" | "kaiming_normal" | "kaiming_uniform"
+    , "init_bn_type": "uniform"      // "uniform" | "constant"
+    , "init_gain": 0.2
+  }
+
+  , "train": {
+    "G_lossfn_type": "l1"               // "l1" preferred | "l2sum" | "l2" | "ssim" | "charbonnier"
+    , "G_lossfn_weight": 1.0            // default
+
+    , "F_lossfn_type": "l1"  // "l1" | "l2"
+    , "F_lossfn_weight": 1
+    , "F_feature_layer": [2,7,16,25,34]        // 25 | [2,7,16,25,34]
+    , "F_weights": [0.1,0.1,1.0,1.0,1.0]       // 1.0 | [0.1,0.1,1.0,1.0,1.0]
+    , "F_use_input_norm": true
+    , "F_use_range_norm": false
+
+    , "gan_type": "gan"     // "gan" | "ragan" | "lsgan" | "wgan" | "softplusgan"
+    , "D_lossfn_weight": 0.1
+
+    , "E_decay": 0.999                  // Exponential Moving Average for netG: set 0 to disable; default setting 0.999
+
+    , "D_init_iters": 0
+
+    , "G_optimizer_type": "adam"        // fixed, adam is enough
+    , "G_optimizer_lr": 2e-4            // learning rate
+    , "G_optimizer_wd": 0               // weight decay, default 0
+    , "G_optimizer_clipgrad": null      // unused
+    , "G_optimizer_reuse": true         //
+
+    , "G_scheduler_type": "MultiStepLR" // "MultiStepLR" is enough
+    , "G_scheduler_milestones": [250000, 400000, 450000, 475000, 500000]
+    , "G_scheduler_gamma": 0.5
+
+    , "G_regularizer_orthstep": null    // unused
+    , "G_regularizer_clipstep": null    // unused
+
+    , "D_optimizer_type": "adam"
+    , "D_optimizer_lr": 1e-4  // learning rate
+    , "D_optimizer_wd": 0
+    , "D_scheduler_type": "MultiStepLR"
+    , "D_scheduler_milestones": [400000, 500000, 550000, 575000, 600000]
+    , "D_scheduler_gamma": 0.5
+    , "D_optimizer_reuse": false
+
+    , "G_param_strict": true
+    , "E_param_strict": true
+
+    , "checkpoint_test": 1           // for testing
+    , "checkpoint_save": 1           // for saving model
+    , "checkpoint_print": 1           // for print
+  }
+}

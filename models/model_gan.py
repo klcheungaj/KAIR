@@ -8,7 +8,47 @@ from models.select_network import define_G, define_D
 from models.model_base import ModelBase
 from models.loss import GANLoss, PerceptualLoss
 from models.loss_ssim import SSIMLoss
+from torch.ao.quantization.fake_quantize import (
+    FakeQuantize,
+    FakeQuantizeBase,
+    default_fake_quant,
+    default_dynamic_fake_quant,
+    default_per_channel_weight_fake_quant,
+    default_weight_fake_quant,
+    default_fused_act_fake_quant,
+    default_fused_wt_fake_quant,
+    FusedMovingAvgObsFakeQuantize,
+    default_fused_per_channel_wt_fake_quant,
+    default_embedding_fake_quant,
+    default_embedding_fake_quant_4bit,
+    fused_wt_fake_quant_range_neg_127_to_127,
+    fused_per_channel_wt_fake_quant_range_neg_127_to_127,
+)
 
+from torch.ao.quantization.observer import (
+    _PartialWrapper,
+    HistogramObserver,
+    MovingAverageMinMaxObserver,
+    NoopObserver,
+    PlaceholderObserver,
+    ReuseInputObserver,
+    default_debug_observer,
+    default_dynamic_quant_observer,
+    default_float_qparams_observer,
+    default_float_qparams_observer_4bit,
+    default_observer,
+    default_per_channel_weight_observer,
+    default_placeholder_observer,
+    default_weight_observer,
+    weight_observer_range_neg_127_to_127,
+    per_channel_weight_observer_range_neg_127_to_127,
+    default_reuse_input_observer,
+    ObserverBase,
+    MovingAveragePerChannelMinMaxObserver
+)
+import copy
+from torch.ao.quantization.quantize_fx import prepare_qat_fx, convert_fx, fuse_fx
+from torch.ao.quantization import get_default_qat_qconfig_mapping
 
 class ModelGAN(ModelBase):
     """Train with pixel-VGG-GAN loss"""
@@ -37,6 +77,26 @@ class ModelGAN(ModelBase):
     # initialize training
     # ----------------------------------------
     def init_train(self):
+        # self.netG.qconfig = torch.ao.quantization.QConfig(activation=FusedMovingAvgObsFakeQuantize.with_args(observer=MovingAverageMinMaxObserver,
+        #                                                                          quant_min=0,
+        #                                                                          quant_max=255,
+        #                                                                          reduce_range=False),
+        #                                                 weight=default_fused_per_channel_wt_fake_quant)
+        
+        example_inputs  = (torch.randn(4, 1, 4, 4))
+        qconfig = torch.ao.quantization.qconfig.QConfig(
+            activation=torch.ao.quantization.observer.HistogramObserver.with_args(
+                qscheme=torch.per_tensor_symmetric,reduce_range=False,
+                    dtype=torch.quint8, quant_min=0, quant_max=256,
+            ),
+            weight=torch.ao.quantization.observer.default_per_channel_weight_observer.with_args(
+                reduce_range=False, qscheme=torch.per_channel_symmetric, 
+                dtype=torch.qint8, quant_min=-127, quant_max=127
+            )
+        )
+        qconfig_dict = {"": qconfig}
+        self.netG = fuse_fx(self.netG.module)
+        self.netG = prepare_qat_fx(self.netG, qconfig_dict, example_inputs)
         self.load()                           # load model
         self.netG.train()                     # set training mode,for BN
         self.netD.train()                     # set training mode,for BN
@@ -88,6 +148,13 @@ class ModelGAN(ModelBase):
     def save(self, iter_label):
         self.save_network(self.save_dir, self.netG, 'G', iter_label)
         self.save_network(self.save_dir, self.netD, 'D', iter_label)
+        self.netGq = copy.deepcopy(self.netG)
+        # self.netGq = self.netGq.to('cpu')
+        self.netGq = self.netGq.to('cpu')
+        self.netGq.eval()
+        self.netGq = convert_fx(self.netGq)
+        # self.netGq = fuse_fx(self.netGq)
+        self.save_network(self.save_dir, self.netGq, 'Gq', iter_label)
         if self.opt_train['E_decay'] > 0:
             self.save_network(self.save_dir, self.netE, 'E', iter_label)
         if self.opt_train['G_optimizer_reuse']:
@@ -185,16 +252,23 @@ class ModelGAN(ModelBase):
     # ----------------------------------------
     # feed L/H data
     # ----------------------------------------
-    def feed_data(self, data, need_H=True):
-        self.L = data['L'].to(self.device)
+    def feed_data(self, data, need_H=True, device=None):
+        if not device:
+            device = self.device
+        self.L = data['L'].to(device)
         if need_H:
-            self.H = data['H'].to(self.device)
+            self.H = data['H'].to(device)
 
     # ----------------------------------------
     # feed L to netG and get E
     # ----------------------------------------
     def netG_forward(self):
         self.E = self.netG(self.L)
+    
+    def netGq_forward(self):
+        # self.netGq = self.netGq.module.to('cpu')
+        self.L.to('cpu')
+        self.E = self.netGq(self.L)
 
     # ----------------------------------------
     # update parameters and get loss
@@ -295,6 +369,11 @@ class ModelGAN(ModelBase):
             self.netG_forward()
         self.netG.train()
 
+    def testq(self):
+        self.netGq.eval()
+        with torch.no_grad():
+            self.netGq_forward()
+        self.netGq.train()
     # ----------------------------------------
     # get log_dict
     # ----------------------------------------
